@@ -1,0 +1,75 @@
+
+## 1. СТРУКТУРА ПРОЕКТУ
+
+```
+project-name/
+│
+├── index.html
+├── page-name.html
+│
+├── styles/
+│   ├── main.css                 ← тільки @import всіх файлів
+│   │
+│   ├── base/
+│   │   ├── reset.css
+│   │   ├── fonts.css
+│   │   └── global.css
+│   │
+│   ├── layout/
+│   │   ├── header.css
+│   │   └── footer.css
+│   │
+│   └── sections/
+│       ├── hero.css
+│       ├── banner.css
+│       └── ... (по одному файлу на секцію/компонент)
+│
+├── scripts/
+│   ├── main.js                  ← тільки імпорти модулів
+│   ├── header.js
+│   └── sections/
+│       ├── tabs.js
+│       ├── slider.js
+│       └── ...
+│
+│В ідеалі ось так, але можна і в корінь викачувати │картинки, без окремих папок для кожної секції, якщо │проект невеликий
+│      👇
+├── images/.      
+│   ├── header/ 
+│   ├── hero/
+│   ├── sections/
+│   └── footer/
+│
+└── fonts/
+    └── *.otf / *.ttf / *.woff2
+```
+
+
+## 2. CSS — ЗАГАЛЬНІ ПРАВИЛА
+
+### main.css
+Тільки `@import` — ніякого власного CSS:
+```css
+@import url("./base/reset.css");
+@import url("./base/fonts.css");
+@import url("./base/global.css");
+@import url("./layout/header.css");
+@import url("./layout/footer.css");
+@import url("./sections/hero.css");
+@import url("./sections/banner.css");
+/* ... */
+```
+
+В мейн файлі не повинно бути ніяких стилів, окрім імпортів. Всі стилі повинні бути розбиті на окремі файли в папках `base`, `layout` та `sections`, а сам мейн повинен підключатися напряму в HTML файлі.
+
+## 3. JAVASCRIPT — ЗАГАЛЬНІ ПРАВИЛА
+
+### main.js
+Розбитий на чіткі секції з коментарями:
+```js
+// SECTION HEADER --------------------------------------------------------
+// ... код хедера
+
+// SECTION TABS --------------------------------------------------------
+// ... код табів
+```

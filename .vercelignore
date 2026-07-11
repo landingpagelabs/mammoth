@@ -1,0 +1,13 @@
+# Local tooling — not needed for the static site
+# NOTE: scripts/ holds the SITE's JS (main.js, header.js, sections/) — keep it!
+node_modules
+tools
+package.json
+package-lock.json
+
+# Secrets / local Vercel state
+.env*
+.vercel
+
+# Backups
+*.bak

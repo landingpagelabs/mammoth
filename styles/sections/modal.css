@@ -1,0 +1,147 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    transition: all .4s ease 0s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+.modal_slider-item {}
+
+.modal-slider-wrap {
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    height: 501px;
+
+}
+
+.modal_slider-item.swiper-slide {
+    width: 100%;
+    max-width: 575px;
+    transform: translateY(20px);
+}
+
+.modal_slider-item.swiper-slide.swiper-slide-active{
+     transform: translateY(0px);
+}
+
+.modal_slider-item.swiper-slide img {
+    width: 100%;
+    height: 433px;
+    object-fit: cover;
+}
+
+
+/* Фон модалки — розмита версія активного слайда (підставляє JS) */
+.modal-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(28px);
+    transform: scale(1.2);
+    opacity: 0;
+    transition: opacity .5s ease 0s;
+    pointer-events: none;
+}
+
+.modal-bg.loaded {
+    opacity: 1;
+}
+
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all .4s ease 0s;
+}
+
+.modal-slider {}
+
+
+.modal-slider-list {}
+
+
+.slider-arrow-prev {
+    position: absolute;
+    top: 50%;
+    left: max(12px, calc(50% - 402.5px));
+    z-index: 100;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.slider-arrow-next {
+    position: absolute;
+    top: 50%;
+    right: max(12px, calc(50% - 402.5px));
+    z-index: 100;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.modal-pagination {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.modal-slider-wrap .cta-main {
+    margin-top: 50px;
+}
+
+.modal_slider-item-title {
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+}
+
+
+.swiper-slide-active .modal_slider-item-title {
+    display: block;
+}
+
+#modal-pag .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 18px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+}
+
+#modal-pag .swiper-pagination-bullet {
+    width: 7px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.40);
+    border-radius: 999px;
+}
+
+.modal-exit {
+    position: absolute;
+    top: 20px;
+    right: 34px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: all .4s ease 0s;
+}
+
+.modal-exit:hover {
+    transform: scale(1.08)
+}

@@ -1,0 +1,49 @@
+.comment {
+    background: #F3F2E7;
+}
+
+.comment_wrapper {
+    padding: 40px 0px
+}
+
+.comment_stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.comment_text-wrap {
+    width: 100%;
+    max-width: 712px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.comment_name-info-wrap {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.comment_name-info-top {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.comment_name-info-flex {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+@media (max-width:991px) {
+    .comment_wrapper {
+        padding: 20px 0px;
+    }
+}

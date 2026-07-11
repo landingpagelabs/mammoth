@@ -1,0 +1,147 @@
+/* ====================================================================
+   CONGRATS / THANK-YOU
+   Проста standalone-сторінка підтвердження заявки.
+   Типографіку, шрифти та кольори бере з main.css (reset/fonts/global);
+   тут — лише каркас самої сторінки.
+   ==================================================================== */
+
+/* Каркас сторінки — sticky footer: футер завжди внизу екрана, без скролу */
+body {
+   min-height: 100vh;
+   min-height: 100dvh;
+   display: flex;
+   flex-direction: column;
+   background-color: #F3F2E7;
+}
+
+.congrats {
+   flex: 1 0 auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding-top: 82px;
+   /* під fixed-хедер */
+   background-color: #F3F2E7;
+   color: #1A1A1A;
+}
+
+/* -------------------------------- Контент --------------------------- */
+.congrats_main {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 24px 20px;
+}
+
+/* Прес-секцію робимо тіснішою, щоб усе вмістилось в один екран */
+.about_wrapper {
+   padding: 28px 0;
+}
+
+.about_top-list {
+   margin-bottom: 28px;
+}
+
+.congrats_card {
+   width: 100%;
+   max-width: 746px;
+   text-align: center;
+}
+
+.congrats_badge {
+   width: 74px;
+   height: 74px;
+   border-radius: 50%;
+   background-color: #CF0606;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 0 auto 28px;
+   animation: congrats-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.congrats_badge svg {
+   width: 32px;
+   height: 32px;
+}
+
+.congrats_title {
+   width: 100%;
+   max-width: 746px;
+   margin-bottom: 16px;
+}
+
+.congrats_text {
+   max-width: 532px;
+   margin: 0 auto ;
+   color: #41424D;
+   margin-bottom: 30px;
+}
+
+.congrats_actions {
+   display: flex;
+   justify-content: center;
+}
+
+.congrats_note {
+   margin-top: 24px;
+   color: rgba(26, 26, 26, 0.55);
+}
+
+.congrats_note a {
+   text-decoration: underline;
+   transition: color 0.3s ease 0s;
+}
+
+.congrats_note a:hover {
+   color: #CF0606;
+}
+
+@keyframes congrats-pop {
+   0% {
+      transform: scale(0.6);
+      opacity: 0;
+   }
+
+   60% {
+      transform: scale(1.08);
+   }
+
+   100% {
+      transform: scale(1);
+      opacity: 1;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .congrats_badge {
+      animation: none;
+   }
+}
+
+/* -------------------------------- Mobile ---------------------------- */
+@media (max-width: 991px) {
+   .congrats {
+      padding-top: 70px;
+      justify-content: flex-start;
+   }
+
+   .congrats_main {
+      padding: 24px 20px;
+   }
+
+   .congrats_badge {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 22px;
+   }
+
+   .congrats_badge svg {
+      width: 28px;
+      height: 28px;
+   }
+
+   .congrats_text {
+      margin-bottom: 28px;
+   }
+}

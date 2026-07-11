@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__get_metadata",
+      "mcp__claude_ai_Figma__get_screenshot",
+      "mcp__claude_ai_Figma__get_variable_defs",
+      "Bash(command -v curl wget python3)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(/usr/bin/curl -s -L -o inter-400.woff2 -w \"http:%{http_code} size:%{size_download}\\\\n\" \"https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.woff2\")",
+      "Bash(/bin/ls -la *.woff2)",
+      "Bash(/bin/ls *.woff2)",
+      "Bash(/usr/bin/wc -l)",
+      "Bash(/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -)",
+      "Bash(/usr/bin/find . -not -path '*/.claude/*' -not -name '.gitkeep' -type f)"
+    ]
+  }
+}
