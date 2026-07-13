@@ -32,8 +32,15 @@
     max-width: 180px;
     display: flex;
     justify-content: center;
+    /* Без центрування flex-дитина розтягується на всю висоту контейнера
+       і лого сплющується (object-fit: fill) — тримаємо власні пропорції */
+    align-items: center;
     flex: 1;
 
+}
+
+.about_top-list-item-image img {
+    object-fit: contain;
 }
 
 .about_bot-list {
