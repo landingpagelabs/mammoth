@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "mammoth-omega.vercel.app" }],
+      "destination": "https://inquire.mammothnewyork.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.(avif|webp|png|jpg|jpeg|svg|ico)",

@@ -4,6 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Cold-traffic funnel: keep out of organic search. Crawling stays OPEN so
+       AdsBot-Google can still assess landing-page quality (blocking it tanks
+       Quality Score). Never add a robots.txt Disallow or an AdsBot-Google
+       noindex here. -->
+  <meta name="robots" content="noindex" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MN3HQFB');</script>
+  <!-- End Google Tag Manager -->
+
   <title>Woman-Owned NYC Renovations &amp; Design-Build Company | Mammoth New York</title>
   <meta name="description"
     content="Mammoth is a woman-owned, award-winning design-build company in NYC. One team designs your renovation, handles the permits, and builds it — in Manhattan and Brooklyn." />
@@ -48,6 +63,11 @@
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MN3HQFB"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="page-wrapper">
     <!-- ============================ HEADER ============================ -->
     <header class="header">
@@ -2714,6 +2734,12 @@
                   <!-- Formspree service fields: тема листа + редірект на сторінку подяки -->
                   <input type="hidden" name="_subject" value="New inquiry from the Mammoth website">
                   <input type="hidden" name="_next" value="https://inquire.mammothnewyork.com/congrats">
+                  <!-- Google Ads click ids — populated by scripts/ads-click-id.js.
+                       Carries the ad click through to the lead record so a closed
+                       job can be imported back into Ads as an offline conversion. -->
+                  <input type="hidden" name="gclid" id="f-gclid">
+                  <input type="hidden" name="wbraid" id="f-wbraid">
+                  <input type="hidden" name="gbraid" id="f-gbraid">
                   <div class="form_list">
                     <div class="form_input-wrap half">
                       <input type="text" name="first_name" autocomplete="given-name" required id="f-first-name">
