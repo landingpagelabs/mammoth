@@ -14,15 +14,51 @@ const modalSlider = new Swiper('#modalSlider', {
   }
 });
 
-// Фон модалки = розмита версія активної картинки слайдера
-const modalBg = document.querySelector('.modal-bg');
-if (modalBg) {
+// Фон модалки = розмита версія активної картинки слайдера.
+// Два шари, що чергуються: нову картинку спершу довантажуємо через
+// new Image(), тоді проявляємо поверх старої — кросфейд без блимання.
+const bgLayers = document.querySelectorAll('.modal-bg .modal-bg_layer');
+if (bgLayers.length === 2) {
+  let topLayer = 0;
+  let bgToken = 0; // захист від «пізніх» onload при швидкому гортанні
+
+  const slideImgUrl = (index) => {
+    const slide = modalSlider.slides[index];
+    const img = slide && slide.querySelector('img');
+    return img ? (img.currentSrc || img.src) : '';
+  };
+
+  const setModalBg = (url) => {
+    const prev = bgLayers[topLayer];
+    const next = bgLayers[1 - topLayer];
+
+    // Скидаємо прозорість нового шару миттєво — він схований під верхнім
+    next.style.transition = 'none';
+    next.classList.remove('loaded');
+    next.offsetHeight; // форсуємо reflow, щоб transition:none спрацював
+    next.style.transition = '';
+
+    next.style.backgroundImage = `url("${url}")`;
+    next.style.zIndex = '2';
+    prev.style.zIndex = '1';
+    next.classList.add('loaded'); // 0 → 1 поверх повністю видимого старого
+    topLayer = 1 - topLayer;
+  };
+
   const updateModalBg = () => {
-    const activeSlide = modalSlider.slides[modalSlider.activeIndex];
-    const img = activeSlide && activeSlide.querySelector('img');
-    if (!img) return;
-    modalBg.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
-    modalBg.classList.add('loaded');
+    const url = slideImgUrl(modalSlider.activeIndex);
+    if (!url) return;
+
+    const token = ++bgToken;
+    const preload = new Image();
+    preload.onload = () => { if (token === bgToken) setModalBg(url); };
+    preload.src = url;
+
+    // Гріємо сусідні слайди, щоб наступне гортання було миттєвим
+    [modalSlider.activeIndex - 1, modalSlider.activeIndex + 1].forEach(i => {
+      const u = slideImgUrl(i);
+      if (u) new Image().src = u;
+    });
   };
 
   modalSlider.on('slideChange', updateModalBg);
@@ -40,6 +76,17 @@ if (modalBg) {
         iconMenu.classList.toggle('_active');
         menuBody.classList.toggle('_active');
         iconMenuWrap.classList.toggle('_active');
+      });
+
+      // Клік по пункту меню: закриваємо оверлей, далі спрацьовує
+      // нативний перехід до якоря секції
+      menuBody.querySelectorAll('.header_link').forEach(link => {
+        link.addEventListener('click', function () {
+          document.body.classList.remove('_lock');
+          iconMenu.classList.remove('_active');
+          menuBody.classList.remove('_active');
+          iconMenuWrap.classList.remove('_active');
+        });
       });
     }
   });
@@ -122,17 +169,19 @@ document.querySelectorAll("[data-stop-flashing='true']").forEach(button => {
 
 
 // --------------------------------------------------------------------
-// MODAL — клік по gallery_item відкриває модалку й ставить активний
-// слайд за data-gallery (loop → slideToLoop, бо є клони).
+// MODAL — єдина точка входу в галерею: сітка проєктів, CTA, фото
+// процесу і фото команди. Активний слайд ставимо за data-gallery
+// (loop → slideToLoop, бо є клони); без data-gallery — з першого.
+// ВАЖЛИВО: селектори скоуплені, бо слайди модалки самі містять
+// .gallery_item[data-gallery] — глобальний біндінг зациклив би кліки.
 // --------------------------------------------------------------------
 const modal = document.querySelector('.modal');
-const galleryItems = document.querySelectorAll('.gallery_list .gallery_item');
 const modalExit = document.querySelector('.modal-exit');
 const modalOverlay = document.querySelector('.modal-overlay');
 
 if (modal) {
   const openModal = (num) => {
-    if (num) modalSlider.slideToLoop(Number(num) - 1, 0);
+    modalSlider.slideToLoop(num ? Number(num) - 1 : 0, 0);
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden'; // блокуємо скрол сторінки
   };
@@ -142,12 +191,11 @@ if (modal) {
     document.body.style.overflow = ''; // повертаємо скрол
   };
 
-  galleryItems.forEach(item => {
-    item.addEventListener('click', () => openModal(item.dataset.gallery));
+  document.querySelectorAll(
+    '.gallery_list .gallery_item, .gallery_cta, .process_list-images-item, .team_image'
+  ).forEach(el => {
+    el.addEventListener('click', () => openModal(el.dataset.gallery));
   });
-
-  const galleryCta = document.querySelector('.gallery_cta');
-  if (galleryCta) galleryCta.addEventListener('click', () => openModal(galleryCta.dataset.gallery));
 
   if (modalExit) modalExit.addEventListener('click', closeModal);
   if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
@@ -161,70 +209,41 @@ if (modal) {
   });
 }
 
+// REVIEWS — «показати ще»: розкриває блок із 34 письмовими відгуками
 const cta = document.querySelector('.reviews_cta');
 const arrow = document.querySelector('.reviews_cta .reviews_arrow');
 const label = document.querySelector('.reviews_cta .text-label-extra-small');
-const hiddenItems = document.querySelectorAll('.reviews_item:nth-child(n+4)');
+const writtenList = document.querySelector('.reviews_written');
 
-let expanded = false;
+if (cta && arrow && label && writtenList) {
+  let expanded = false;
 
-cta.addEventListener('click', () => {
-  expanded = !expanded;
+  cta.addEventListener('click', () => {
+    expanded = !expanded;
 
-  hiddenItems.forEach(item => item.classList.toggle('expanded', expanded));
-  arrow.classList.toggle('active', expanded);
-  label.textContent = expanded ? 'SHOW LESS REVIEWS' : 'SHOW 34 MORE REVIEWS';
-});
+    writtenList.classList.toggle('expanded', expanded);
+    arrow.classList.toggle('active', expanded);
+    label.textContent = expanded ? 'SHOW LESS REVIEWS' : 'SHOW 34 MORE REVIEWS';
+
+    // Згортання з глибини списку: повертаємо користувача до кнопки
+    if (!expanded) cta.scrollIntoView({ block: 'center' });
+  });
+}
 
 // --------------------------------------------------------------------
-// PROCESS IMAGES — ховер-бейдж «expand full image» (той самий, що в
-// галереї) + клік відкриває повне зображення в простому лайтбоксі
-// (окремо від галерейної Swiper-модалки).
+// PROCESS/TEAM — ховер-бейдж «expand full image» (той самий, що в
+// галереї); клік відкриває спільну Swiper-модалку (окремий лайтбокс
+// прибрано, все веде в одну галерею).
 // --------------------------------------------------------------------
 (() => {
-  const items = document.querySelectorAll('.process_list-images-item');
-  if (!items.length) return;
-
-  // Лайтбокс будуємо один раз
-  const lightbox = document.createElement('div');
-  lightbox.className = 'img-lightbox';
-  lightbox.innerHTML =
-    '<div class="img-lightbox_overlay"></div>' +
-    '<button class="img-lightbox_close" aria-label="Close">&times;</button>' +
-    '<img class="img-lightbox_img" src="" alt="">';
-  document.body.appendChild(lightbox);
-
-  const lbImg = lightbox.querySelector('.img-lightbox_img');
-
-  const openLightbox = (src, alt) => {
-    lbImg.src = src;
-    lbImg.alt = alt || '';
-    lightbox.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = () => {
-    lightbox.classList.remove('visible');
-    document.body.style.overflow = '';
-  };
-
-  // Бейдж «EXPAND FULL IMAGE» клонуємо з галереї, щоб не дублювати SVG
+  const items = document.querySelectorAll('.process_list-images-item, .team_image');
   const badgeTemplate = document.querySelector('.gallery_list .gallery_hover');
+  if (!items.length || !badgeTemplate) return;
 
   items.forEach(item => {
-    if (badgeTemplate && !item.querySelector('.gallery_hover')) {
+    if (!item.querySelector('.gallery_hover')) {
       item.appendChild(badgeTemplate.cloneNode(true));
     }
-    const img = item.querySelector('img');
-    item.addEventListener('click', () => {
-      if (img) openLightbox(img.currentSrc || img.src, img.alt);
-    });
-  });
-
-  lightbox.querySelector('.img-lightbox_overlay').addEventListener('click', closeLightbox);
-  lightbox.querySelector('.img-lightbox_close').addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
   });
 })();
 
@@ -313,6 +332,18 @@ document.querySelectorAll('.form_input-wrap').forEach(wrap => {
       label.classList.remove('active');
     }
   });
+
+  // Автозаповнення браузера не тригерить focus — лейбл лишався поверх
+  // значення і поле виглядало зламаним. Синхронізуємо лейбл зі значенням
+  // на input/change і при завантаженні сторінки.
+  const syncLabel = () => {
+    if (document.activeElement !== input) {
+      label.classList.toggle('active', Boolean(input.value.trim()));
+    }
+  };
+  input.addEventListener('input', () => label.classList.add('active'));
+  input.addEventListener('change', syncLabel);
+  syncLabel();
 
   // Для select — тримаємо лейбл активним, поки вибрано країну
   if (input.tagName === 'SELECT') {

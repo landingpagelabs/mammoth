@@ -8,6 +8,8 @@
     transition: all .4s ease 0s;
     opacity: 0;
     visibility: hidden;
+    /* Суцільний темний фолбек, поки вантажиться розмитий фон */
+    background-color: #1A1A1A;
 }
 
 .modal.visible {
@@ -47,22 +49,29 @@
 }
 
 
-/* Фон модалки — розмита версія активного слайда (підставляє JS) */
+/* Фон модалки — розмита версія активного слайда (підставляє JS).
+   Два шари: новий проявляється поверх старого — кросфейд без блимання.
+   Блюр лишається на батьківському контейнері (один прохід блюру). */
 .modal-bg {
     position: absolute;
     inset: 0;
     z-index: 40;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     filter: blur(28px);
     transform: scale(1.2);
-    opacity: 0;
-    transition: opacity .5s ease 0s;
     pointer-events: none;
 }
 
-.modal-bg.loaded {
+.modal-bg_layer {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity .5s ease 0s;
+}
+
+.modal-bg_layer.loaded {
     opacity: 1;
 }
 

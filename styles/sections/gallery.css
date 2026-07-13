@@ -320,7 +320,12 @@
     }
 
     .gallery_wrapper {
-        padding: 20px 0px;
+        padding: 35px 0px;
+    }
+
+    /* Тісніший відступ H2 → контент на мобілці */
+    .gallery_text-wrap {
+        margin-bottom: 24px;
     }
 
 }

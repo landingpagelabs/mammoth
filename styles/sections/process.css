@@ -101,67 +101,23 @@
     visibility: visible;
 }
 
-/* Лайтбокс повного зображення (спільний, будується в JS) */
-.img-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-.img-lightbox.visible {
-    display: flex;
-}
-
-.img-lightbox_overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    cursor: pointer;
-}
-
-.img-lightbox_img {
-    position: relative;
-    max-width: 92vw;
-    max-height: 90vh;
-    object-fit: contain;
-    z-index: 1;
-}
-
-.img-lightbox_close {
-    position: absolute;
-    top: 20px;
-    right: 28px;
-    z-index: 2;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 44px;
-    line-height: 1;
-    cursor: pointer;
-    transition: opacity .3s ease 0s, transform .3s ease 0s;
-}
-
-.img-lightbox_close:hover {
-    opacity: 0.7;
-    transform: scale(1.03);
-}
-
-
 @media (max-width:991px) {
     .process_list-images-item.item-5 {
         max-width: 100%;
     }
 
     .process_wrapper {
-        padding: 20px 0px;
+        padding: 35px 0px;
     }
 
+    /* Ширший відступ H2 «Our process» → перший крок,
+       тісніший — між заголовком кроку (H3) і його текстом */
     .process_title-wrap {
-        margin-bottom: 20px;
+        margin-bottom: 35px;
+    }
+
+    .process_item {
+        gap: 12px;
     }
 
 
