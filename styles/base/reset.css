@@ -35,6 +35,16 @@ svg {
   max-width: 100%;
 }
 
+/* 6a. У <img> є width/height атрибути (щоб браузер знав пропорції ще до
+   завантаження → нуль стрибків лейауту). Але height-атрибут — це ще й
+   presentational hint: разом із CSS width:100% він розтягував би картинку
+   на всю питому висоту. height:auto повертає пропорційне масштабування;
+   секційні правила з явною висотою (модалка, аватари) мають вищу
+   специфічність і лишаються чинними. */
+img {
+  height: auto;
+}
+
 /* 6b. <picture> is just a wrapper carrying the AVIF/WebP <source>s.
    display:contents removes its box so the inner <img> stays the real
    layout element — flex/grid item sizing behaves exactly as before. */
