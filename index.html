@@ -17,10 +17,34 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="shortcut icon" href="images/header/tab-default.png" type="image/png" />
-  <link rel="stylesheet" href="styles/main.css" />
+
+  <!-- Критичні шрифти: прелоад, щоб H1 і текст не чекали на CSS-ланцюжок -->
+  <link rel="preload" as="font" type="font/woff2" href="fonts/MammothSerif-Regular.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/ProximaNovaRegular.woff2" crossorigin />
+
+  <!-- CSS підключаємо пофайлово (паралельне завантаження замість
+       водоспаду @import у main.css; порядок = порядок імпортів) -->
+  <link rel="stylesheet" href="styles/base/reset.css" />
+  <link rel="stylesheet" href="styles/base/fonts.css" />
+  <link rel="stylesheet" href="styles/base/global.css" />
+  <link rel="stylesheet" href="styles/layout/header.css" />
+  <link rel="stylesheet" href="styles/layout/footer.css" />
+  <link rel="stylesheet" href="styles/sections/hero.css" />
+  <link rel="stylesheet" href="styles/sections/about.css" />
+  <link rel="stylesheet" href="styles/sections/gallery.css" />
+  <link rel="stylesheet" href="styles/sections/team.css" />
+  <link rel="stylesheet" href="styles/sections/comment.css" />
+  <link rel="stylesheet" href="styles/sections/process.css" />
+  <link rel="stylesheet" href="styles/sections/reviews.css" />
+  <link rel="stylesheet" href="styles/sections/working.css" />
+  <link rel="stylesheet" href="styles/sections/faq.css" />
+  <link rel="stylesheet" href="styles/sections/modal.css" />
+  <link rel="stylesheet" href="vendor/swiper-bundle.min.css" />
+
+  <!-- Swiper з defer ПЕРЕД main.js: обидва виконуються після парсингу
+       в порядку документа, тож глобальний Swiper вже визначений -->
+  <script defer src="vendor/swiper-bundle.min.js"></script>
   <script type="module" src="scripts/main.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
 </head>
 
@@ -214,7 +238,7 @@
                     <div class="gallery_item item-1" data-gallery="1">
                       <picture>
                         <source srcset="images/sections/gallery/item-1.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-1.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-1.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-1.png"
                           alt="Walnut kitchen with a marble island and leather bar stools in a Mammoth-renovated NYC home">
                       </picture>
@@ -243,7 +267,7 @@
                       <div class="gallery_item item-2" data-gallery="2">
                         <picture>
                           <source srcset="images/sections/gallery/item-2-v2.avif" type="image/avif">
-                          <source srcset="images/sections/gallery/item-2-v2.webp" type="image/webp"><img
+                          <source srcset="images/sections/gallery/item-2-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                             src="images/sections/gallery/item-2-v2.png"
                             alt="Oak storage bench with a built-in pull-out dog-bowl drawer and a small dog feeding">
                         </picture>
@@ -272,7 +296,7 @@
                     <div class="gallery_item item-3" data-gallery="3">
                       <picture>
                         <source srcset="images/sections/gallery/item-3-v2.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-3-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-3-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-3-v2.png"
                           alt="Dining area with an exposed red-brick wall, blue-grey cabinetry and a wood table with black cross-back chairs">
                       </picture>
@@ -308,7 +332,7 @@
                     <div class="gallery_item item-4" data-gallery="4">
                       <picture>
                         <source srcset="images/sections/gallery/item-5-v2.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-5-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-5-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-5-v2.png"
                           alt="Sitting room with an olive-green velvet sofa against deep blue-green panelled walls and a vase of allium flowers">
                       </picture>
@@ -347,7 +371,7 @@
                     <div class="gallery_item item-5" data-gallery="5">
                       <picture>
                         <source srcset="images/sections/gallery/item-5-v4.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-5-v4.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-5-v4.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-5-v4.png"
                           alt="Oak kitchen with a marble-topped island and two ribbed globe pendant lights"></picture>
                       <div class="gallery_hover">
@@ -372,7 +396,7 @@
                     <div class="gallery_item item-5" data-gallery="6">
                       <picture>
                         <source srcset="images/sections/gallery/item-6-v2.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-6-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-6-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-6-v2.png"
                           alt="Bedroom with an upholstered cream bed and a woven pendant light beneath an exposed wood-beam ceiling">
                       </picture>
@@ -400,7 +424,7 @@
                   <div class="gallery_item item-3" data-gallery="7">
                     <picture>
                       <source srcset="images/sections/gallery/item-7-v2.avif" type="image/avif">
-                      <source srcset="images/sections/gallery/item-7-v2.webp" type="image/webp"><img
+                      <source srcset="images/sections/gallery/item-7-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                         src="images/sections/gallery/item-7-v2.png"
                         alt="Sage-green kitchen with a veined-marble backsplash and island beside a glass-block wall">
                     </picture>
@@ -431,7 +455,7 @@
                   <div class="gallery_item item-3" data-gallery="8">
                     <picture>
                       <source srcset="images/sections/gallery/item-8-v2.avif" type="image/avif">
-                      <source srcset="images/sections/gallery/item-8-v2.webp" type="image/webp"><img
+                      <source srcset="images/sections/gallery/item-8-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                         src="images/sections/gallery/item-8-v2.png"
                         alt="Living room with a black marble fireplace, a tan shearling armchair and a burl-wood coffee table">
                     </picture>
@@ -456,7 +480,7 @@
                   <div class="gallery_item item-3" data-gallery="9">
                     <picture>
                       <source srcset="images/sections/gallery/item-9-v2.avif" type="image/avif">
-                      <source srcset="images/sections/gallery/item-9-v2.webp" type="image/webp"><img
+                      <source srcset="images/sections/gallery/item-9-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                         src="images/sections/gallery/item-9-v2.png"
                         alt="Powder room with a perforated-metal vanity, a marble top and a city-view window"></picture>
                     <div class="gallery_hover">
@@ -482,7 +506,7 @@
                     <div class="gallery_item item-4" data-gallery="10">
                       <picture>
                         <source srcset="images/sections/gallery/item-10-v2.avif" type="image/avif">
-                        <source srcset="images/sections/gallery/item-10-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/gallery/item-10-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/gallery/item-10-v2.png"
                           alt="View through open walnut sliding doors into a dining room with globe pendant lights">
                       </picture>
@@ -588,7 +612,7 @@
                 <div class="team_image item-3">
                   <picture>
                     <source srcset="images/sections/team/item-3.avif" type="image/avif">
-                    <source srcset="images/sections/team/item-3.webp" type="image/webp"><img
+                    <source srcset="images/sections/team/item-3.webp" type="image/webp"><img loading="lazy" decoding="async"
                       src="images/sections/team/item-3.png"
                       alt="Mammoth founders Maryana Grinshpun and Jessica Maktal in a Dumbo alleyway"></picture>
                 </div>
@@ -687,7 +711,7 @@
 
               <div class="process_list">
                 <div class="process_item">
-                  <h5 class="title-h4"><span>1.</span>Discovery</h5>
+                  <h3 class="title-h4"><span>1.</span>Discovery</h3>
                   <div class="process_text-wrap">
                     <p class="text-body-regular">It starts with a call with one of our founders, where we get to know
                       your project, your space, and what matters most to you. From there, they walk your home with you
@@ -699,7 +723,7 @@
                     <div class="process_list-images-item item-1" data-gallery="5">
                       <picture>
                         <source srcset="images/sections/process/item-1-v1.avif" type="image/avif">
-                        <source srcset="images/sections/process/item-1-v1.webp" type="image/webp"><img
+                        <source srcset="images/sections/process/item-1-v1.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/process/item-1-v1.png"
                           alt="Oak kitchen with a marble-topped island and two ribbed globe pendant lights"></picture>
                     </div>
@@ -709,7 +733,7 @@
                     <div class="process_list-images-item item-2" data-gallery="14">
                       <picture>
                         <source srcset="images/sections/process/item-2-v2.avif" type="image/avif">
-                        <source srcset="images/sections/process/item-2-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/process/item-2-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/process/item-2-v2.png"
                           alt="Deep blue-green panelled sitting room with a checkered-upholstered armchair beside the window">
                       </picture>
@@ -721,7 +745,7 @@
 
 
                 <div class="process_item">
-                  <h5 class="title-h4"><span>2.</span> Design & Permitting</h5>
+                  <h3 class="title-h4"><span>2.</span> Design & Permitting</h3>
                   <div class="process_text-wrap">
                     <p class="text-body-regular">We start from your taste, how you live, and what you're drawn to. Then
                       Maryana, our co-founder and design lead, works with our design team to bring your vision to life
@@ -734,7 +758,7 @@
                     <div class="process_list-images-item item-3" data-gallery="11">
                       <picture>
                         <source srcset="images/sections/process/item-3-v2.avif" type="image/avif">
-                        <source srcset="images/sections/process/item-3-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/process/item-3-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/process/item-3-v2.png"
                           alt="Bedroom with a full wall of walnut wardrobes and an open door to an ensuite bathroom">
                       </picture>
@@ -742,7 +766,7 @@
                     <div class="process_list-images-item item-4" data-gallery="13">
                       <picture>
                         <source srcset="images/sections/process/item-4-v2.avif" type="image/avif">
-                        <source srcset="images/sections/process/item-4-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/process/item-4-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/process/item-4-v2.png"
                           alt="Kitchen with a black soapstone waterfall island and backsplash beneath a row of globe pendant lights">
                       </picture>
@@ -750,7 +774,7 @@
                     <div class="process_list-images-item item-5" data-gallery="12">
                       <picture>
                         <source srcset="images/sections/process/item-5-v2.avif" type="image/avif">
-                        <source srcset="images/sections/process/item-5-v2.webp" type="image/webp"><img
+                        <source srcset="images/sections/process/item-5-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/process/item-5-v2.png"
                           alt="Bathroom with a glass walk-in shower and an oak vanity with a carved grey marble sink">
                       </picture>
@@ -760,7 +784,7 @@
                 </div>
 
                 <div class="process_item">
-                  <h5 class="title-h4"><span>3.</span> Build & Move-In</h5>
+                  <h3 class="title-h4"><span>3.</span> Build & Move-In</h3>
                   <div class="process_text-wrap">
                     <p class="text-body-regular">Then Jessica, our co-founder and construction lead, runs the build with
                       our own in-house crew and the specialty trades we've worked with for years. Someone from our team
@@ -775,7 +799,7 @@
                       <div class="process_list-images-item item-2" data-gallery="8">
                         <picture>
                           <source srcset="images/sections/process/item-6-v2.avif" type="image/avif">
-                          <source srcset="images/sections/process/item-6-v2.webp" type="image/webp"><img
+                          <source srcset="images/sections/process/item-6-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                             src="images/sections/process/item-6-v2.png"
                             alt="Living room with a black marble fireplace, a tan shearling armchair and a burnt-orange velvet chair">
                         </picture>
@@ -784,7 +808,7 @@
                       <div class="process_list-images-item item-1" data-gallery="4">
                         <picture>
                           <source srcset="images/sections/process/item-7-v2.avif" type="image/avif">
-                          <source srcset="images/sections/process/item-7-v2.webp" type="image/webp"><img
+                          <source srcset="images/sections/process/item-7-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                             src="images/sections/process/item-7-v2.png"
                             alt="Study with an olive-green velvet sofa against deep blue-green panelled walls">
                         </picture>
@@ -818,7 +842,7 @@
               </div>
               <div class="reviews_list">
                 <div class="reviews_item">
-                  <h5 class="title-h5">Brooklyn Commercial Loft Renovation</h5>
+                  <h3 class="title-h5">Brooklyn Commercial Loft Renovation</h3>
                   <div class="reviews_text-wrap">
                     <p class="text-body-small">
                       “I feel very fortunate to have chosen Mammoth Projects to design my kitchen project. I came into
@@ -846,7 +870,7 @@
                     <div class="reviews_list-images-item item-1">
                       <picture>
                         <source srcset="images/sections/reviews/item-1.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-1.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-1.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-1.png"
                           alt="Industrial loft with a blue kitchen island and skyline views — Brooklyn commercial loft renovation">
                       </picture>
@@ -855,7 +879,7 @@
                     <div class="reviews_list-images-item item-2">
                       <picture>
                         <source srcset="images/sections/reviews/item-2.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-2.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-2.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-2.png"
                           alt="Blue cabinetry wall on a polished-concrete floor"></picture>
                     </div>
@@ -863,7 +887,7 @@
                     <div class="reviews_list-images-item item-3">
                       <picture>
                         <source srcset="images/sections/reviews/item-3.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-3.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-3.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-3.png"
                           alt="Blue kitchen with a concrete wall, double wall ovens and a live-edge counter"></picture>
                     </div>
@@ -871,7 +895,7 @@
                 </div>
 
                 <div class="reviews_item">
-                  <h5 class="title-h5">West Village Condo Renovation</h5>
+                  <h3 class="title-h5">West Village Condo Renovation</h3>
                   <div class="reviews_text-wrap">
                     <p class="text-body-small">
                       “After interviewing many designers, I hired Maryana from Mammoth Projects to help renovate my
@@ -897,7 +921,7 @@
                     <div class="reviews_list-images-item item-4">
                       <picture>
                         <source srcset="images/sections/reviews/item-4.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-4.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-4.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-4.png"
                           alt="Bedroom corner with sliding glass doors opening to a terrace — West Village condo renovation">
                       </picture>
@@ -906,7 +930,7 @@
                     <div class="reviews_list-images-item item-5">
                       <picture>
                         <source srcset="images/sections/reviews/item-5.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-5.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-5.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-5.png"
                           alt="Room with a green-tiled fireplace and a white chaise lounge"></picture>
                     </div>
@@ -914,7 +938,7 @@
                     <div class="reviews_list-images-item item-6">
                       <picture>
                         <source srcset="images/sections/reviews/item-6.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-6.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-6.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-6.png"
                           alt="Living room with a grey sectional, a blue rug and an exposed-brick TV wall"></picture>
                     </div>
@@ -923,7 +947,7 @@
 
 
                 <div class="reviews_item">
-                  <h5 class="title-h5">Brooklyn Condo Renovation</h5>
+                  <h3 class="title-h5">Brooklyn Condo Renovation</h3>
                   <div class="reviews_text-wrap">
                     <p class="text-body-small">
                       "Maryana Grinshpun had exceptionally valuable design suggestions for me. Her ideas made all the
@@ -947,7 +971,7 @@
                     <div class="reviews_list-images-item item-7">
                       <picture>
                         <source srcset="images/sections/reviews/item-7.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-7.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-7.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-7.png"
                           alt="Black soapstone counter with an integrated sink — Brooklyn condo renovation"></picture>
                     </div>
@@ -955,7 +979,7 @@
                     <div class="reviews_list-images-item item-8">
                       <picture>
                         <source srcset="images/sections/reviews/item-8.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-8.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-8.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-8.png" alt="Oak cabinetry with dovetailed drawer joinery">
                       </picture>
                     </div>
@@ -963,7 +987,7 @@
                     <div class="reviews_list-images-item item-9">
                       <picture>
                         <source srcset="images/sections/reviews/item-9.avif" type="image/avif">
-                        <source srcset="images/sections/reviews/item-9.webp" type="image/webp"><img
+                        <source srcset="images/sections/reviews/item-9.webp" type="image/webp"><img loading="lazy" decoding="async"
                           src="images/sections/reviews/item-9.png"
                           alt="Grey stone-tiled shower niche beside a white bathtub"></picture>
                     </div>
@@ -1843,52 +1867,52 @@
                   <input type="hidden" name="_next" value="https://inquire.mammothnewyork.com/congrats">
                   <div class="form_list">
                     <div class="form_input-wrap half">
-                      <input type="text" name="first_name" autocomplete="given-name" required>
-                      <label class="text-body-regular">First Name</label>
+                      <input type="text" name="first_name" autocomplete="given-name" required id="f-first-name">
+                      <label for="f-first-name" class="text-body-regular">First Name</label>
                     </div>
 
                     <div class="form_input-wrap half">
-                      <input type="text" name="last_name" autocomplete="family-name" required>
-                      <label class="text-body-regular">Last Name</label>
+                      <input type="text" name="last_name" autocomplete="family-name" required id="f-last-name">
+                      <label for="f-last-name" class="text-body-regular">Last Name</label>
                     </div>
 
                     <div class="form_input-wrap">
-                      <input type="email" name="email" autocomplete="email" required>
-                      <label class="text-body-regular">Email</label>
+                      <input type="email" name="email" autocomplete="email" required id="f-email">
+                      <label for="f-email" class="text-body-regular">Email</label>
                     </div>
 
 
 
                     <div class="form_input-wrap h-60">
-                      <input type="text" name="address" autocomplete="address-line1" required>
-                      <label class="text-body-regular">Address</label>
+                      <input type="text" name="address" autocomplete="address-line1" required id="f-address">
+                      <label for="f-address" class="text-body-regular">Address</label>
                     </div>
 
                     <div class="form_input-wrap h-60">
-                      <input type="text" name="apartment" autocomplete="address-line2">
-                      <label class="text-body-regular">Apartment, Suite, etc. (Optional)</label>
+                      <input type="text" name="apartment" autocomplete="address-line2" id="f-apartment">
+                      <label for="f-apartment" class="text-body-regular">Apartment, Suite, etc. (Optional)</label>
                     </div>
 
                     <div class="form_list-flex">
                       <div class="form_input-wrap">
-                        <input type="text" name="city" autocomplete="address-level2" required>
-                        <label class="text-body-regular">City</label>
+                        <input type="text" name="city" autocomplete="address-level2" required id="f-city">
+                        <label for="f-city" class="text-body-regular">City</label>
                       </div>
                       <div class="form_input-wrap">
-                        <input type="text" name="state" autocomplete="address-level1" required>
-                        <label class="text-body-regular">State</label>
+                        <input type="text" name="state" autocomplete="address-level1" required id="f-state">
+                        <label for="f-state" class="text-body-regular">State</label>
                       </div>
                       <div class="form_input-wrap">
                         <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric"
                           pattern="\s*[0-9]{5}(-[0-9]{4})?\s*" maxlength="12" required
-                          title="Enter a 5-digit ZIP code">
-                        <label class="text-body-regular">ZIP Code</label>
+                          title="Enter a 5-digit ZIP code" id="f-zip">
+                        <label for="f-zip" class="text-body-regular">ZIP Code</label>
                       </div>
                     </div>
 
                     <div class="form_input-wrap">
-                      <textarea name="message" required></textarea>
-                      <label class="text-body-regular textarea-label">Tell Us About Your Project...</label>
+                      <textarea name="message" required id="f-message"></textarea>
+                      <label for="f-message" class="text-body-regular textarea-label">Tell Us About Your Project...</label>
                     </div>
 
 
@@ -1910,20 +1934,20 @@
                 <div class="working-strapline_image">
                   <picture>
                     <source srcset="images/sections/working/line.avif" type="image/avif">
-                    <source srcset="images/sections/working/line.webp" type="image/webp"><img
+                    <source srcset="images/sections/working/line.webp" type="image/webp"><img loading="lazy" decoding="async"
                       class="working-strapline_image-line ml-15" src="images/sections/working/line.png" alt="">
                   </picture>
 
 
                   <picture>
                     <source srcset="images/sections/working/strapline.avif" type="image/avif">
-                    <source srcset="images/sections/working/strapline.webp" type="image/webp"><img
+                    <source srcset="images/sections/working/strapline.webp" type="image/webp"><img loading="lazy" decoding="async"
                       class="working-strapline_img" src="images/sections/working/strapline.png"
                       alt="Features &amp; Awards"></picture>
 
                   <picture>
                     <source srcset="images/sections/working/line.avif" type="image/avif">
-                    <source srcset="images/sections/working/line.webp" type="image/webp"><img
+                    <source srcset="images/sections/working/line.webp" type="image/webp"><img loading="lazy" decoding="async"
                       class="working-strapline_image-line mr-15" src="images/sections/working/line.png" alt="">
                   </picture>
 
@@ -1933,105 +1957,105 @@
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/1.avif" type="image/avif">
-                      <source srcset="images/sections/working/1.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/1.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/1.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/2.avif" type="image/avif">
-                      <source srcset="images/sections/working/2.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/2.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/2.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/3.avif" type="image/avif">
-                      <source srcset="images/sections/working/3.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/3.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/3.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/4.avif" type="image/avif">
-                      <source srcset="images/sections/working/4.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/4.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/4.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/5.avif" type="image/avif">
-                      <source srcset="images/sections/working/5.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/5.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/5.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/6.avif" type="image/avif">
-                      <source srcset="images/sections/working/6.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/6.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/6.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/7.avif" type="image/avif">
-                      <source srcset="images/sections/working/7.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/7.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/7.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/8.avif" type="image/avif">
-                      <source srcset="images/sections/working/8.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/8.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/8.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/9.avif" type="image/avif">
-                      <source srcset="images/sections/working/9.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/9.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/9.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/10.avif" type="image/avif">
-                      <source srcset="images/sections/working/10.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/10.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/10.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/11.avif" type="image/avif">
-                      <source srcset="images/sections/working/11.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/11.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/11.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/12.avif" type="image/avif">
-                      <source srcset="images/sections/working/12.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/12.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img " src="images/sections/working/12.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/13.avif" type="image/avif">
-                      <source srcset="images/sections/working/13.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/13.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img" src="images/sections/working/13.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/14.avif" type="image/avif">
-                      <source srcset="images/sections/working/14.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/14.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img" src="images/sections/working/14.png"
                         alt="Press feature and award logo"></picture>
                   </div>
                   <div class="item_working-bottom">
                     <picture>
                       <source srcset="images/sections/working/15.avif" type="image/avif">
-                      <source srcset="images/sections/working/15.webp" type="image/webp"><img
+                      <source srcset="images/sections/working/15.webp" type="image/webp"><img loading="lazy" decoding="async"
                         class="item-working-bottom_img" src="images/sections/working/15.png"
                         alt="Press feature and award logo"></picture>
                   </div>
@@ -2057,7 +2081,7 @@
               <div class="footer_image">
                 <picture>
                   <source srcset="images/footer/footer_logo.avif" type="image/avif">
-                  <source srcset="images/footer/footer_logo.webp" type="image/webp"><img class=" footer_img"
+                  <source srcset="images/footer/footer_logo.webp" type="image/webp"><img loading="lazy" decoding="async" class=" footer_img"
                     src="images/footer/footer_logo.png" alt="Mammoth"></picture>
               </div>
               <div class="footer_text-wrap">
@@ -2210,7 +2234,7 @@
             <div class="gallery_item" data-gallery="1">
               <picture>
                 <source srcset="images/sections/gallery/item-1.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-1.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-1.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-1.png"
                   alt="Walnut kitchen with a marble island and leather bar stools in a Mammoth-renovated NYC home">
               </picture>
@@ -2224,7 +2248,7 @@
             <div class="gallery_item" data-gallery="2">
               <picture>
                 <source srcset="images/sections/gallery/item-2-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-2-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-2-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-2-v2.png"
                   alt="Oak storage bench with a built-in pull-out dog-bowl drawer and a small dog feeding">
               </picture>
@@ -2238,7 +2262,7 @@
             <div class="gallery_item" data-gallery="3">
               <picture>
                 <source srcset="images/sections/gallery/item-3-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-3-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-3-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-3-v2.png"
                   alt="Dining area with an exposed red-brick wall, blue-grey cabinetry and a wood table with black cross-back chairs">
               </picture>
@@ -2252,7 +2276,7 @@
             <div class="gallery_item" data-gallery="4">
               <picture>
                 <source srcset="images/sections/gallery/item-5-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-5-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-5-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-5-v2.png"
                   alt="Sitting room with an olive-green velvet sofa against deep blue-green panelled walls and a vase of allium flowers">
               </picture>
@@ -2266,7 +2290,7 @@
             <div class="gallery_item" data-gallery="5">
               <picture>
                 <source srcset="images/sections/gallery/item-5-v4.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-5-v4.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-5-v4.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-5-v4.png"
                   alt="Oak kitchen with a marble-topped island and two ribbed globe pendant lights"></picture>
             </div>
@@ -2279,7 +2303,7 @@
             <div class="gallery_item" data-gallery="6">
               <picture>
                 <source srcset="images/sections/gallery/item-6-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-6-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-6-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-6-v2.png"
                   alt="Bedroom with an upholstered cream bed and a woven pendant light beneath an exposed wood-beam ceiling">
               </picture>
@@ -2293,7 +2317,7 @@
             <div class="gallery_item" data-gallery="7">
               <picture>
                 <source srcset="images/sections/gallery/item-7-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-7-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-7-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-7-v2.png"
                   alt="Sage-green kitchen with a veined-marble backsplash and island beside a glass-block wall">
               </picture>
@@ -2307,7 +2331,7 @@
             <div class="gallery_item" data-gallery="8">
               <picture>
                 <source srcset="images/sections/gallery/item-8-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-8-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-8-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-8-v2.png"
                   alt="Living room with a black marble fireplace, a tan shearling armchair and a burl-wood coffee table">
               </picture>
@@ -2321,7 +2345,7 @@
             <div class="gallery_item" data-gallery="9">
               <picture>
                 <source srcset="images/sections/gallery/item-9-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-9-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-9-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-9-v2.png"
                   alt="Powder room with a perforated-metal vanity, a marble top and a city-view window"></picture>
             </div>
@@ -2334,7 +2358,7 @@
             <div class="gallery_item" data-gallery="10">
               <picture>
                 <source srcset="images/sections/gallery/item-10-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-10-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-10-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-10-v2.png"
                   alt="View through open walnut sliding doors into a dining room with globe pendant lights"></picture>
             </div>
@@ -2347,7 +2371,7 @@
             <div class="gallery_item">
               <picture>
                 <source srcset="images/sections/gallery/item-11-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-11-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-11-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-11-v2.png"
                   alt="Bedroom with a full wall of walnut wardrobes and an open door to an ensuite bathroom"></picture>
             </div>
@@ -2361,7 +2385,7 @@
             <div class="gallery_item">
               <picture>
                 <source srcset="images/sections/gallery/item-12-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-12-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-12-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-12-v2.png"
                   alt="Bathroom with a glass walk-in shower and an oak vanity with a carved grey marble sink"></picture>
             </div>
@@ -2374,7 +2398,7 @@
             <div class="gallery_item">
               <picture>
                 <source srcset="images/sections/gallery/item-13-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-13-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-13-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-13-v2.png"
                   alt="Kitchen with a black soapstone waterfall island and backsplash beneath a row of globe pendant lights">
               </picture>
@@ -2388,7 +2412,7 @@
             <div class="gallery_item">
               <picture>
                 <source srcset="images/sections/gallery/item-14-v2.avif" type="image/avif">
-                <source srcset="images/sections/gallery/item-14-v2.webp" type="image/webp"><img
+                <source srcset="images/sections/gallery/item-14-v2.webp" type="image/webp"><img loading="lazy" decoding="async"
                   src="images/sections/gallery/item-14-v2.png"
                   alt="Deep blue-green panelled sitting room with a checkered-upholstered armchair beside the window">
               </picture>
@@ -2420,13 +2444,7 @@
 
 
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js">
-  </script>
+  <!-- Swiper перенесено в <head> з defer; Splide/Masonry прибрано (не використовувались) -->
 
 </body>
 

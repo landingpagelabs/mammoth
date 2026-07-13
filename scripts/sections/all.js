@@ -17,16 +17,13 @@ const modalSlider = new Swiper('#modalSlider', {
 // Фон модалки = розмита версія активної картинки слайдера.
 // Два шари, що чергуються: нову картинку спершу довантажуємо через
 // new Image(), тоді проявляємо поверх старої — кросфейд без блимання.
+// Слайди мають loading="lazy", тож активний і сусідні форсуємо eager,
+// а URL беремо лише коли <picture> вибрав реальний source (currentSrc).
+let updateModalBg = () => {}; // викликається також із openModal
 const bgLayers = document.querySelectorAll('.modal-bg .modal-bg_layer');
 if (bgLayers.length === 2) {
   let topLayer = 0;
   let bgToken = 0; // захист від «пізніх» onload при швидкому гортанні
-
-  const slideImgUrl = (index) => {
-    const slide = modalSlider.slides[index];
-    const img = slide && slide.querySelector('img');
-    return img ? (img.currentSrc || img.src) : '';
-  };
 
   const setModalBg = (url) => {
     const prev = bgLayers[topLayer];
@@ -45,24 +42,38 @@ if (bgLayers.length === 2) {
     topLayer = 1 - topLayer;
   };
 
-  const updateModalBg = () => {
-    const url = slideImgUrl(modalSlider.activeIndex);
-    if (!url) return;
+  const forceEager = (index) => {
+    const slide = modalSlider.slides[index];
+    const img = slide && slide.querySelector('img');
+    if (img && img.loading === 'lazy') img.loading = 'eager';
+    return img;
+  };
 
-    const token = ++bgToken;
-    const preload = new Image();
-    preload.onload = () => { if (token === bgToken) setModalBg(url); };
-    preload.src = url;
+  updateModalBg = () => {
+    const img = forceEager(modalSlider.activeIndex);
+    if (!img) return;
 
     // Гріємо сусідні слайди, щоб наступне гортання було миттєвим
-    [modalSlider.activeIndex - 1, modalSlider.activeIndex + 1].forEach(i => {
-      const u = slideImgUrl(i);
-      if (u) new Image().src = u;
-    });
+    forceEager(modalSlider.activeIndex - 1);
+    forceEager(modalSlider.activeIndex + 1);
+
+    const token = ++bgToken;
+    const apply = () => {
+      if (token !== bgToken) return;
+      const url = img.currentSrc || img.src;
+      if (!url) return;
+      const preload = new Image();
+      preload.onload = () => { if (token === bgToken) setModalBg(url); };
+      preload.src = url;
+    };
+
+    if (img.complete && img.currentSrc) apply();
+    else img.addEventListener('load', apply, { once: true });
   };
 
   modalSlider.on('slideChange', updateModalBg);
-  updateModalBg(); // стартовий слайд
+  // Стартовий фон НЕ ставимо одразу — щоб не тягнути картинки слайдів
+  // при завантаженні сторінки; openModal викликає updateModalBg сам.
 }
 
  document.addEventListener("DOMContentLoaded", function () {
@@ -184,6 +195,8 @@ if (modal) {
     modalSlider.slideToLoop(num ? Number(num) - 1 : 0, 0);
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden'; // блокуємо скрол сторінки
+    // slideChange не спрацює, якщо індекс не змінився — оновлюємо фон явно
+    updateModalBg();
   };
 
   const closeModal = () => {
