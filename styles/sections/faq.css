@@ -41,6 +41,27 @@
 .item-faq-head_icon-wrap{
     flex-shrink: 0;
 }
+
+/* Ховер-підказка: рядок підсвічується, іконка +/− збільшується —
+   видно, що питання розгортається */
+.item-faq {
+    transition: background-color .25s ease 0s;
+}
+
+.item-faq:hover {
+    background-color: rgba(35, 31, 32, 0.04);
+}
+
+.item-faq-head_icon,
+.item-faq-head_icon-minus {
+    transition: transform .25s ease 0s;
+}
+
+.item-faq:hover .item-faq-head_icon,
+.item-faq:hover .item-faq-head_icon-minus {
+    transform: scale(1.2);
+}
+
 .item-faq-head_icon-minus {
     display: none;
 }
@@ -68,7 +89,12 @@
 
 @media (max-width:991px) {
     .faq_wrapper {
-        padding: 20px 0px;
+        padding: 35px 0px;
+    }
+
+    /* Тісніший відступ H2 → список питань на мобілці */
+    .faq_head {
+        margin-bottom: 24px;
     }
 
     .item-faq{

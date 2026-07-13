@@ -156,25 +156,55 @@
     transform: scale(1.03);
 }
 
-.reviews_item:nth-child(n+4) {
-    display: none;
-}
-
-.reviews_item:nth-child(n+4).expanded {
-    display: flex;
-}
-
 .reviews_item h5 {
     text-align: center;
 }
 
+/* Письмові відгуки — колонковий masonry без JS,
+   розкриваються кнопкою «SHOW 34 MORE REVIEWS» */
+.reviews_written {
+    display: none;
+    columns: 3;
+    column-gap: 12px;
+    margin-bottom: 40px;
+}
+
+.reviews_written.expanded {
+    display: block;
+    animation: reviews-fade .35s ease;
+}
+
+@keyframes reviews-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+.reviews_written-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    padding: 16px 18px 15px;
+    background-color: #FFFFFF;
+}
+
+.reviews_written-badge {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reviews_written-name {
+    margin-top: 20px;
+}
+
 @media (max-width:991px) {
     .reviews_wrapper {
-        padding: 20px 0px;
+        padding: 35px 0px;
     }
 
     .reviews_title-wrap {
-        margin-bottom: 35px;
+        margin-bottom: 20px;
     }
 
     .reviews_list-images {
@@ -209,5 +239,15 @@
 
     .reviews_list-images-item {
         max-width: 100% !important;
+    }
+
+    .reviews_written {
+        columns: 1;
+    }
+
+    /* Глобальний .text-label-extra-small на мобілці = 12px,
+       для кнопки відгуків лишаємо 14px */
+    .reviews_cta .text-label-extra-small {
+        font-size: 14px;
     }
 }

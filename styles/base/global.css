@@ -73,6 +73,12 @@
    height: 60px;
 }
 
+/* Інпут заповнює всю висоту обгортки .h-60, інакше під ним лишається
+   5px мертвого простору і візуальний відступ між полями стає 17px замість 12px */
+.form_input-wrap.h-60 input {
+   min-height: 60px;
+}
+
 .title-h1 {
    font-size: 55px;
    font-family: 'Mammoth Serif', serif;
@@ -518,6 +524,12 @@
 }
 
 @media (max-width: 991px) {
+
+   /* Блокуємо скрол сторінки, поки відкрите мобільне меню */
+   body._lock {
+      overflow: hidden;
+   }
+
    .header_menu {
       position: fixed;
       top: 0;

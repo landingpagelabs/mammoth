@@ -59,6 +59,36 @@
     margin: 0 auto;
 }
 
+/* Фото команди клікабельне — відкриває спільну галерею-модалку.
+   Ховер «expand full image» + затемнення, як на process-картинках */
+.team_image {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.team_image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.60) 100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s ease 0s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.team_image:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.team_image:hover .gallery_hover {
+    opacity: 1;
+    visibility: visible;
+}
+
 .team_image.item-3 img {
     object-fit: cover;
     height: 100%;
@@ -80,7 +110,7 @@
 
 @media (max-width:991px) {
     .team_wrapper {
-        padding: 20px 0px;
+        padding: 35px 0px;
     }
 
     .team_members svg {

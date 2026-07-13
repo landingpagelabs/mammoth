@@ -35,7 +35,7 @@ body {
 
 /* Прес-секцію робимо тіснішою, щоб усе вмістилось в один екран */
 .about_wrapper {
-   padding: 28px 0;
+   padding: 28px 0 56px;
 }
 
 .about_top-list {
