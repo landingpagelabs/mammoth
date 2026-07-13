@@ -3,6 +3,12 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "mammoth-omega.vercel.app" }],
+      "destination": "https://inquire.mammothnewyork.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "mammoth-omega.vercel.app" }],
       "destination": "https://inquire.mammothnewyork.com/:path*",
