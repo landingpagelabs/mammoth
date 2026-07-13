@@ -187,15 +187,49 @@
     background-color: #FFFFFF;
 }
 
+/* Верхній рядок картки: 5 зірок + бейдж «Verified Review» */
+.reviews_written-top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.reviews_written-stars {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
 .reviews_written-badge {
     display: flex;
     gap: 6px;
     align-items: center;
-    margin-bottom: 20px;
 }
 
+/* Низ картки: аватар 44px + ім'я */
 .reviews_written-name {
     margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.reviews_written-avatar {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.reviews_written-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 @media (max-width:991px) {

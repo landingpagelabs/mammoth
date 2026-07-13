@@ -1,80 +1,125 @@
 import FALLBACK_COUNTRIES from './countries.js';
 
-const modalSlider = new Swiper('#modalSlider', {
-  loop: true,
-  slidesPerView: 'auto',
-  centeredSlides: true,
-  spaceBetween: 164,
-  navigation: {
-    nextEl: '#sliderNext',
-    prevEl: '#sliderPrev',
-  },
-  pagination: {
-    el: '#modal-pag'
-  }
-});
+// --------------------------------------------------------------------
+// SWIPER — вантажимо ЛІНИВО. Слайдер потрібен лише коли користувач
+// відкриває галерею, тож ~143KB JS + CSS не висять на критичному шляху.
+// Файли підтягуємо на idle після завантаження сторінки (щоб перший клік
+// був миттєвий) або на першому кліку — що станеться раніше.
+// --------------------------------------------------------------------
+let swiperAssets = null;
+const loadSwiperAssets = () => {
+  if (swiperAssets) return swiperAssets;
 
-// Фон модалки = розмита версія активної картинки слайдера.
+  const css = new Promise((resolve) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'vendor/swiper-bundle.min.css';
+    link.onload = link.onerror = resolve;
+    document.head.appendChild(link);
+  });
+
+  const js = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'vendor/swiper-bundle.min.js';
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+
+  swiperAssets = Promise.all([css, js]);
+  return swiperAssets;
+};
+
+let modalSlider = null;
+let updateModalBg = () => {}; // перевизначається після ініту слайдера
+
+// Ініт слайдера + фон модалки (розмита версія активного фото).
 // Два шари, що чергуються: нову картинку спершу довантажуємо через
 // new Image(), тоді проявляємо поверх старої — кросфейд без блимання.
 // Слайди мають loading="lazy", тож активний і сусідні форсуємо eager,
 // а URL беремо лише коли <picture> вибрав реальний source (currentSrc).
-let updateModalBg = () => {}; // викликається також із openModal
-const bgLayers = document.querySelectorAll('.modal-bg .modal-bg_layer');
-if (bgLayers.length === 2) {
-  let topLayer = 0;
-  let bgToken = 0; // захист від «пізніх» onload при швидкому гортанні
+const initSlider = async () => {
+  if (modalSlider) return modalSlider;
+  await loadSwiperAssets();
+  if (modalSlider) return modalSlider; // паралельні виклики
 
-  const setModalBg = (url) => {
-    const prev = bgLayers[topLayer];
-    const next = bgLayers[1 - topLayer];
+  modalSlider = new Swiper('#modalSlider', {
+    loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 164,
+    navigation: {
+      nextEl: '#sliderNext',
+      prevEl: '#sliderPrev',
+    },
+    pagination: {
+      el: '#modal-pag'
+    }
+  });
 
-    // Скидаємо прозорість нового шару миттєво — він схований під верхнім
-    next.style.transition = 'none';
-    next.classList.remove('loaded');
-    next.offsetHeight; // форсуємо reflow, щоб transition:none спрацював
-    next.style.transition = '';
+  const bgLayers = document.querySelectorAll('.modal-bg .modal-bg_layer');
+  if (bgLayers.length === 2) {
+    let topLayer = 0;
+    let bgToken = 0; // захист від «пізніх» onload при швидкому гортанні
 
-    next.style.backgroundImage = `url("${url}")`;
-    next.style.zIndex = '2';
-    prev.style.zIndex = '1';
-    next.classList.add('loaded'); // 0 → 1 поверх повністю видимого старого
-    topLayer = 1 - topLayer;
-  };
+    const setModalBg = (url) => {
+      const prev = bgLayers[topLayer];
+      const next = bgLayers[1 - topLayer];
 
-  const forceEager = (index) => {
-    const slide = modalSlider.slides[index];
-    const img = slide && slide.querySelector('img');
-    if (img && img.loading === 'lazy') img.loading = 'eager';
-    return img;
-  };
+      // Скидаємо прозорість нового шару миттєво — він схований під верхнім
+      next.style.transition = 'none';
+      next.classList.remove('loaded');
+      next.offsetHeight; // форсуємо reflow, щоб transition:none спрацював
+      next.style.transition = '';
 
-  updateModalBg = () => {
-    const img = forceEager(modalSlider.activeIndex);
-    if (!img) return;
-
-    // Гріємо сусідні слайди, щоб наступне гортання було миттєвим
-    forceEager(modalSlider.activeIndex - 1);
-    forceEager(modalSlider.activeIndex + 1);
-
-    const token = ++bgToken;
-    const apply = () => {
-      if (token !== bgToken) return;
-      const url = img.currentSrc || img.src;
-      if (!url) return;
-      const preload = new Image();
-      preload.onload = () => { if (token === bgToken) setModalBg(url); };
-      preload.src = url;
+      next.style.backgroundImage = `url("${url}")`;
+      next.style.zIndex = '2';
+      prev.style.zIndex = '1';
+      next.classList.add('loaded'); // 0 → 1 поверх повністю видимого старого
+      topLayer = 1 - topLayer;
     };
 
-    if (img.complete && img.currentSrc) apply();
-    else img.addEventListener('load', apply, { once: true });
-  };
+    const forceEager = (index) => {
+      const slide = modalSlider.slides[index];
+      const img = slide && slide.querySelector('img');
+      if (img && img.loading === 'lazy') img.loading = 'eager';
+      return img;
+    };
 
-  modalSlider.on('slideChange', updateModalBg);
-  // Стартовий фон НЕ ставимо одразу — щоб не тягнути картинки слайдів
-  // при завантаженні сторінки; openModal викликає updateModalBg сам.
-}
+    updateModalBg = () => {
+      const img = forceEager(modalSlider.activeIndex);
+      if (!img) return;
+
+      // Гріємо сусідні слайди, щоб наступне гортання було миттєвим
+      forceEager(modalSlider.activeIndex - 1);
+      forceEager(modalSlider.activeIndex + 1);
+
+      const token = ++bgToken;
+      const apply = () => {
+        if (token !== bgToken) return;
+        const url = img.currentSrc || img.src;
+        if (!url) return;
+        const preload = new Image();
+        preload.onload = () => { if (token === bgToken) setModalBg(url); };
+        preload.src = url;
+      };
+
+      if (img.complete && img.currentSrc) apply();
+      else img.addEventListener('load', apply, { once: true });
+    };
+
+    modalSlider.on('slideChange', updateModalBg);
+  }
+
+  return modalSlider;
+};
+
+// Прогрів на idle: файли будуть у кеші ще до першого кліку
+window.addEventListener('load', () => {
+  const warm = () => loadSwiperAssets();
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 4000 });
+  else setTimeout(warm, 2000);
+});
 
  document.addEventListener("DOMContentLoaded", function () {
     const iconMenu = document.querySelector('.menu_icon');
@@ -191,7 +236,9 @@ const modalExit = document.querySelector('.modal-exit');
 const modalOverlay = document.querySelector('.modal-overlay');
 
 if (modal) {
-  const openModal = (num) => {
+  const openModal = async (num) => {
+    // Перший клік довантажує Swiper (зазвичай уже прогрітий на idle)
+    await initSlider();
     modalSlider.slideToLoop(num ? Number(num) - 1 : 0, 0);
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden'; // блокуємо скрол сторінки

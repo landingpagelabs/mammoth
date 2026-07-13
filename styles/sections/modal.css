@@ -32,9 +32,14 @@
 
 }
 
+/* Слайд хугає ширину свого фото: висота фіксована 433px, ширина — за
+   природними пропорціями знімка (як у Figma: 274–582px). Ніякого кропу.
+   Ширина відома ще до завантаження картинки завдяки width/height
+   атрибутам на <img> (звідси aspect-ratio) — Swiper коректно рахує
+   слайди на ініті, і немає стрибка лейауту. */
 .modal_slider-item.swiper-slide {
-    width: 100%;
-    max-width: 575px;
+    width: auto;
+    max-width: none;
     transform: translateY(20px);
 }
 
@@ -43,9 +48,11 @@
 }
 
 .modal_slider-item.swiper-slide img {
-    width: 100%;
+    display: block;
+    width: auto;
     height: 433px;
-    object-fit: cover;
+    max-width: 92vw;
+    object-fit: contain;
 }
 
 
@@ -153,4 +160,22 @@
 
 .modal-exit:hover {
     transform: scale(1.08)
+}
+@media (max-width:991px) {
+    .modal-slider-wrap {
+        height: auto;
+    }
+
+    /* На телефоні фото вписуємо у в'юпорт, пропорції лишаються природні */
+    .modal_slider-item.swiper-slide img {
+        height: auto;
+        width: auto;
+        max-width: 86vw;
+        max-height: 58vh;
+    }
+
+    .slider-arrow-prev,
+    .slider-arrow-next {
+        display: none;
+    }
 }
