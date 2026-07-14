@@ -194,6 +194,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       Mammoth Projects® <span dyn="Year">2026</span>. All Rights Reserved.
     </p>
   </footer>
+
+  <!-- Capture only. This page otherwise loads no JS, so an ad click that lands
+       HERE first (a Privacy sitelink, an email-footer link) would never have its
+       gclid or UTMs persisted — and the trip back to the form drops the query
+       string. There is no .form on this page, so the fill path no-ops. -->
+  <script type="module" src="scripts/ads-click-id.js"></script>
 </body>
 
 </html>

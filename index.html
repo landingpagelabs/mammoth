@@ -60,6 +60,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        або на першому кліку — що станеться раніше. -->
   <script type="module" src="scripts/main.js"></script>
 
+  <!-- Ad attribution loads on its own, NOT via main.js: main.js imports
+       sections/all.js first, so an eval-time throw anywhere in that 446-line
+       file would silently kill click-id + UTM capture. Lead attribution must
+       not be downstream of a gallery bug. -->
+  <script type="module" src="scripts/ads-click-id.js"></script>
+
 </head>
 
 <body>
@@ -2734,12 +2740,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <!-- Formspree service fields: тема листа + редірект на сторінку подяки -->
                   <input type="hidden" name="_subject" value="New inquiry from the Mammoth website">
                   <input type="hidden" name="_next" value="https://inquire.mammothnewyork.com/congrats">
-                  <!-- Google Ads click ids — populated by scripts/ads-click-id.js.
-                       Carries the ad click through to the lead record so a closed
-                       job can be imported back into Ads as an offline conversion. -->
-                  <input type="hidden" name="gclid" id="f-gclid">
-                  <input type="hidden" name="wbraid" id="f-wbraid">
-                  <input type="hidden" name="gbraid" id="f-gbraid">
+                  <!-- Ad attribution — populated by scripts/ads-click-id.js. Carries the
+                       click AND the campaign through to the lead record so a closed job
+                       can be imported back into Ads as an offline conversion. Fields with
+                       no value are disabled at load, so they never reach Formspree. -->
+                  <input type="hidden" name="gclid">
+                  <input type="hidden" name="wbraid">
+                  <input type="hidden" name="gbraid">
+                  <input type="hidden" name="utm_source">
+                  <input type="hidden" name="utm_medium">
+                  <input type="hidden" name="utm_campaign">
+                  <input type="hidden" name="utm_term">
+                  <input type="hidden" name="utm_content">
+                  <input type="hidden" name="utm_id">
                   <div class="form_list">
                     <div class="form_input-wrap half">
                       <input type="text" name="first_name" autocomplete="given-name" required id="f-first-name">
