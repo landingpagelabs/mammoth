@@ -162,48 +162,37 @@
     transform: scale(1.08)
 }
 @media (max-width:991px) {
-    /* Full-screen flex column that vertically centres the photo. Two things
-       are load-bearing here:
-         - transform:none — the base rule translate-centres the wrap, which
-           would also become the containing block for the CTA below and trap
-           its `position:absolute` mid-screen. Dropping it lets the CTA anchor
-           to this full-screen wrap, i.e. the viewport bottom.
-         - default align-items:stretch (do NOT set center) — Swiper needs its
-           container at full width to lay out the track; centring the flex
-           items collapses it and the slide flies off-screen. */
+    /* Keep the wrap as a plain block that the base rule translate-centres.
+       DO NOT make this a flexbox: Swiper's loop/centeredSlides track maths
+       break when its container is a flex item, and in WebKit (iOS Safari)
+       the whole track translates off-screen so the photo vanishes and only
+       the blurred backdrop shows. Block layout is the only cross-engine-safe
+       option. The photo sits a little above centre; that's the acceptable
+       trade for a lightbox that actually renders on iPhone. */
     .modal-slider-wrap {
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 60px 0 96px;   /* clear the close button (top) + pinned CTA (bottom) */
-        box-sizing: border-box;
-    }
-
-    .modal-slider {
-        width: 100%;
-    }
-
-    /* На телефоні фото вписуємо у в'юпорт, пропорції лишаються природні */
-    .modal_slider-item.swiper-slide img {
         height: auto;
-        width: auto;
-        max-width: 86vw;
-        max-height: 56vh;
     }
 
-    .modal-slider-wrap .cta-main {
-        position: absolute;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 0;
-        z-index: 1000;
-        white-space: nowrap;
+    /* Give each slide a DETERMINISTIC width. With slidesPerView:'auto', Swiper
+       measures every slide to build its loop track. width:auto slides (sized by
+       the photo) get mis-measured in WebKit/iOS Safari — before the image
+       constrains, the slide reports the photo's *natural* width (~1770px), so
+       the track translates thousands of px sideways and the photo lands
+       off-screen, leaving only the blurred backdrop (the "lightbox doesn't
+       work on iPhone" bug). A fixed 86vw slide measures identically in every
+       engine; the photo sizes inside it via object-fit. */
+    .modal_slider-item.swiper-slide {
+        width: 86vw;
+    }
+
+    .modal_slider-item.swiper-slide img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: 58vh;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
     }
 
     .slider-arrow-prev,
