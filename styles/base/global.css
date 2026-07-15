@@ -712,12 +712,17 @@
       letter-spacing: -0.01em;
    }
 
-   .form_input-wrap input {
-      font-size: 14px;
+   /* 16px, not 14 — iOS Safari auto-zooms into any field whose font-size is
+      < 16px on focus, which then pushes the form wider than the viewport and
+      clips its right edge. 16px keeps the field readable and kills the zoom. */
+   .form_input-wrap input,
+   .form_input-wrap select,
+   .form_input-wrap textarea {
+      font-size: 16px;
    }
 
    .form_input-wrap label {
-      font-size: 14px;
+      font-size: 16px;
    }
 
 

@@ -48,18 +48,24 @@
     transition: background-color .25s ease 0s;
 }
 
-.item-faq:hover {
-    background-color: rgba(35, 31, 32, 0.04);
-}
-
 .item-faq-head_icon,
 .item-faq-head_icon-minus {
     transition: transform .25s ease 0s;
 }
 
-.item-faq:hover .item-faq-head_icon,
-.item-faq:hover .item-faq-head_icon-minus {
-    transform: scale(1.2);
+/* Gate hover styling to real pointers. On touch, :hover sticks after a tap,
+   so an opened FAQ stayed visibly "hovered" (tinted bg + enlarged icon)
+   until you tapped elsewhere. (hover: hover) keeps the affordance for mice
+   and removes the stuck state on phones. */
+@media (hover: hover) {
+    .item-faq:hover {
+        background-color: rgba(35, 31, 32, 0.04);
+    }
+
+    .item-faq:hover .item-faq-head_icon,
+    .item-faq:hover .item-faq-head_icon-minus {
+        transform: scale(1.2);
+    }
 }
 
 .item-faq-head_icon-minus {
