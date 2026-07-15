@@ -17,10 +17,6 @@
     visibility: visible;
 }
 
-
-
-.modal_slider-item {}
-
 .modal-slider-wrap {
     position: fixed;
     width: 100%;
@@ -90,11 +86,6 @@
     background-color: rgba(0, 0, 0, 0.5);
     transition: all .4s ease 0s;
 }
-
-.modal-slider {}
-
-
-.modal-slider-list {}
 
 
 .slider-arrow-prev {
